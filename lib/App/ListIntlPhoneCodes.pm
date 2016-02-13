@@ -20,7 +20,6 @@ our $data;
     $data = [];
     my $id2names  = $Locale::Codes::Data{'country'}{'id2names'};
     my $id2alpha2 = $Locale::Codes::Data{'country'}{'id2code'}{'alpha-2'};
-    my $id2alpha2 = $Locale::Codes::Data{'country'}{'id2code'}{'alpha-2'};
 
     for my $id (keys %$id2names) {
         my $alpha2 = $id2alpha2->{$id};
@@ -28,7 +27,7 @@ our $data;
         push @$data, [
             $alpha2,
             $id2names->{$id}[0],
-            $npc ? $npc->country_code ? undef,
+            $npc ? $npc->country_code : undef,
         ];
     }
 
