@@ -1,6 +1,8 @@
 package App::ListIntlPhoneCodes;
 
+# AUTHORITY
 # DATE
+# DIST
 # VERSION
 
 use 5.010001;
@@ -31,7 +33,7 @@ our $data;
         ];
     }
 
-    $data = [sort {$a->[0] cmp $b->[0]} @$data];
+    $data = [sort {($a->[0]//'') cmp ($b->[0]//'')} @$data];
 }
 
 my $res = gen_read_table_func(
