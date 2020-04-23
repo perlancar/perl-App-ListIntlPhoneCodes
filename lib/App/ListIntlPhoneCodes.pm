@@ -18,18 +18,18 @@ our @EXPORT_OK = qw(list_countries);
 our $data;
 {
     require Locale::Codes::Country_Codes;
-    require Number::Phone::CountryCode;
+    require Number::Phone::Country;
     $data = [];
     my $id2names  = $Locale::Codes::Data{'country'}{'id2names'};
     my $id2alpha2 = $Locale::Codes::Data{'country'}{'id2code'}{'alpha-2'};
 
     for my $id (keys %$id2names) {
         my $alpha2 = $id2alpha2->{$id};
-        my $npc = Number::Phone::CountryCode->new($alpha2);
+        my $dial_code = Number::Phone::Country::country_code($alpha2);
         push @$data, [
             $alpha2,
             $id2names->{$id}[0],
-            $npc ? $npc->country_code : undef,
+            $dial_code,
         ];
     }
 
@@ -55,9 +55,9 @@ my $res = gen_read_table_func(
                 pos => 1,
                 sortable => 1,
             },
-            code => {
-                summary => 'English country name',
-                schema => 'int',
+            codes => {
+                summary => 'Country code',
+                schema => 'str*',
                 pos => 2,
                 sortable => 1,
             },
